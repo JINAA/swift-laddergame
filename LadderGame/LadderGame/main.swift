@@ -9,10 +9,19 @@
 import Foundation
 
 // 참여인원 입력 받기
-func getPlayer() -> Int {
-    print("참여할 사람은 몇 명 인가요?")
-    let player = readLine()
-    return Int(player ?? "") ?? 0
+func getPlayer() -> Array<String> {
+    print("참여할 사람 이름을 입력하세요. (이름은 쉽표(,)로 구분하세요)")
+    let player = readLine() ?? ""
+    let names = player.split(separator: ",").map(String.init)
+    return names
+}
+
+func playerCount() -> Int{
+    let inputNames = getPlayer()
+    let names = inputNames.split(separator: ",")
+    let countPlayer = names.count
+    
+    return countPlayer
 }
 
 // 사다리 높이 입력 받기
@@ -53,8 +62,8 @@ func preparadeToMakeFootBoard(_ player: Int, _ ladderHeight: Int) -> [[Bool]] {
 // 사다리 발판 만들기
 // 발판 요소
 enum LadderFootBoardElements: String {
-    case hasFootBoard = "-"
-    case noFootBoard = " "
+    case hasFootBoard = "-----"
+    case noFootBoard = "     "
 }
 
 // readyToMakeFootBoard에서 만든 불값2차원배열을 발판 요소들로 대체시키기
@@ -83,8 +92,9 @@ func makeLadder(_ player: Int, _ ladderHeight:Int) {
 // main (실행 부)
 func main() {
     let player = getPlayer()
+    let countPlayer = player.count
     let ladderHeight = getLadderHeight()
-    makeLadder(player, ladderHeight)
+    makeLadder(countPlayer, ladderHeight)
 }
 main()
 
